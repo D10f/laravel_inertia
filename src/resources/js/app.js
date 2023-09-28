@@ -1,9 +1,15 @@
 import { createApp, h } from "vue";
 import { createInertiaApp } from "@inertiajs/vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
+// import NProgress from "nprogress";
 import "../css/app.css";
 
 createInertiaApp({
+  progress: {
+    delay: 250,
+    showSpinner: true,
+  },
+
   resolve: (name) =>
     resolvePageComponent(
       `./Pages/${name}.vue`,
