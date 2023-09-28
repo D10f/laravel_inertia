@@ -1,24 +1,18 @@
-How to get started with this project.
+## How To Run
 
-1. #### Install frontend dependencies.
+1. ### Install dependencies.
 
-   This will spin up a container with Node.js running that will install all of the required packages for the frontend, including Vite's development server itself.
+   Installs application dependencies, including development packages for things like Vite, TailwindCSS, etc.
+   This will spin up a container with Node.js running that will install all of the required packages for the front-end, including Vite's development server itself.
 
    ```console
+   $ docker compose run --rm composer install
    $ docker compose run --rm npm install
    ```
 
-2. #### Run development server for frontend assets.
+2. ### Run development server.
 
-   Once all necessary packages are installed, this will run the development server for frontend assets. It will watch for changes on all frontend files and update them automatically.
-
-   ```console
-   $ docker compose run --rm npm
-   ```
-
-3. #### Run development server.
-
-   This is the Laravel application itself.
+   Runs a reverse proxy to forward incoming requests to either the Laravel or Vite backends. It provides Hot Module Replacement for the browser.
 
    ```console
    $ docker compose up -d nginx
