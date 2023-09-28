@@ -1,0 +1,72 @@
+---
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+    volumes:
+      - ./src:/var/www/html
+      - ./nginx/:/etc/nginx/conf.d
+    ports:
+      - 8080:80
+      - 5173:5173
+    depends_on:
+      - laravel
+      - npm
+
+  laravel:
+    build:
+      context: .
+      dockerfile: php/Dockerfile
+      target: app
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+    volumes:
+      - ./src:/var/www/html
+
+  composer:
+    build:
+      context: .
+      dockerfile: php/Dockerfile
+      target: composer
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+    volumes:
+      - ./src:/var/www/html
+
+  artisan:
+    build:
+      context: .
+      dockerfile: php/Dockerfile
+      target: artisan
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+    volumes:
+      - ./src:/var/www/html
+    depends_on:
+      - mariadb
+
+  mariadb:
+    image: mariadb:10.7
+    volumes:
+      - db_data:/var/lib/mysql
+    env_file:
+      - ./src/.env
+
+  npm:
+    image: node:18-bookworm-slim
+    volumes:
+      - ./src:/var/www/html
+    working_dir: /var/www/html
+    user: node
+    entrypoint: ["npm"]
+    command: ["run", "dev"]
+
+volumes:
+  db_data: {}
