@@ -1,11 +1,3 @@
 <template>
-    <Header title="Home" />
+    <h2 class="font-bold text-2xl">Home</h2>
 </template>
-
-<script>
-import Header from "../Shared/Header.vue";
-
-export default {
-    components: { Header },
-};
-</script>

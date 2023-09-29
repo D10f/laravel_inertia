@@ -1,23 +1,30 @@
 import { createApp, h } from "vue";
-import { createInertiaApp } from "@inertiajs/vue3";
+import { Link, createInertiaApp } from "@inertiajs/vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
-// import NProgress from "nprogress";
 import "../css/app.css";
+import Layout from "./Shared/Layout.vue";
 
 createInertiaApp({
-  progress: {
-    delay: 250,
-    showSpinner: true,
-  },
+    progress: {
+        delay: 250,
+        showSpinner: true,
+    },
 
-  resolve: (name) =>
-    resolvePageComponent(
-      `./Pages/${name}.vue`,
-      import.meta.glob("./Pages/**/*.vue"),
-    ),
-  setup({ el, App, props, plugin }) {
-    createApp({ render: () => h(App, props) })
-      .use(plugin)
-      .mount(el);
-  },
+    resolve: async (name) => {
+        const page = await resolvePageComponent(
+            `./Pages/${name}.vue`,
+            import.meta.glob("./Pages/**/*.vue"),
+        );
+
+        page.default.layout ??= Layout;
+
+        return page;
+    },
+
+    setup({ el, App, props, plugin }) {
+        createApp({ render: () => h(App, props) })
+            .use(plugin)
+            .component("Link", Link)
+            .mount(el);
+    },
 });
