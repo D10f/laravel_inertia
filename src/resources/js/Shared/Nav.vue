@@ -1,3 +1,7 @@
+<script setup>
+import NavLink from "./NavLink.vue";
+</script>
+
 <template>
     <nav>
         <ul class="flex justify-between items-center gap-4">
@@ -31,11 +35,3 @@
         </ul>
     </nav>
 </template>
-
-<script>
-import NavLink from "./NavLink.vue";
-
-export default {
-    components: { NavLink },
-};
-</script>

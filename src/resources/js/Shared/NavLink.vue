@@ -1,3 +1,9 @@
+<script setup>
+defineProps({
+    active: Boolean,
+});
+</script>
+
 <template>
     <Link
         class="text-blue-600 hover:underline"
@@ -6,11 +12,3 @@
         <slot />
     </Link>
 </template>
-
-<script>
-export default {
-    props: {
-        active: Boolean,
-    },
-};
-</script>
