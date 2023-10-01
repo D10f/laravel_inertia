@@ -18,7 +18,9 @@ RUN apt-get update && apt-get install -y \
     git
 
 RUN docker-php-ext-install \
-    zip
+    zip \
+    pdo \
+    pdo_mysql
 
 FROM base AS composer
 RUN curl -sS https://getcomposer.org/installer | \

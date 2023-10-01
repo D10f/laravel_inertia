@@ -50,7 +50,8 @@ services:
     volumes:
       - ./src:/var/www/html
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
 
   mariadb:
     image: mariadb:10.7
@@ -58,6 +59,10 @@ services:
       - db_data:/var/lib/mysql
     env_file:
       - ./src/.env
+    healthcheck:
+      test: mysqladmin ping -h localhost
+      timeout: 30s
+      retries: 5
 
   npm:
     image: node:18-bookworm-slim
