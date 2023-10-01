@@ -1,4 +1,11 @@
 <template>
+    <Head>
+        <meta
+            name="description"
+            head-key="description"
+            content="A modern bookmark manager for the DIY enthusiasts."
+        />
+    </Head>
     <header class="flex items-center p-4 gap-2 bg-gray-200">
         <h1 class="text-2xl">My App</h1>
         <p>Welcome back, {{ username }}!</p>

@@ -1,5 +1,5 @@
 import { createApp, h } from "vue";
-import { Link, createInertiaApp } from "@inertiajs/vue3";
+import { Link, Head, createInertiaApp } from "@inertiajs/vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import "../css/app.css";
 import Layout from "./Shared/Layout.vue";
@@ -9,6 +9,8 @@ createInertiaApp({
         delay: 250,
         showSpinner: true,
     },
+
+    title: (title) => `My App - ${title}`,
 
     resolve: async (name) => {
         const page = await resolvePageComponent(
@@ -25,6 +27,7 @@ createInertiaApp({
         createApp({ render: () => h(App, props) })
             .use(plugin)
             .component("Link", Link)
+            .component("Head", Head)
             .mount(el);
     },
 });

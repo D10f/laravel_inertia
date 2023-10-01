@@ -1,4 +1,5 @@
 <template>
+    <Head title="Users" />
     <h2 class="font-bold text-2xl">Users</h2>
     <div class="absolute -bottom-12 px-4 pt-8">
         <time class="block">{{ time }}</time>
