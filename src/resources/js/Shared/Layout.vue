@@ -20,7 +20,7 @@
 <script setup>
 import { computed } from "vue";
 import { usePage } from "@inertiajs/vue3";
-import Nav from "./Nav.vue";
+import Nav from "@/Shared/Nav.vue";
 
 const page = usePage();
 

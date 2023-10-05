@@ -2,7 +2,7 @@ import { createApp, h } from "vue";
 import { Link, Head, createInertiaApp } from "@inertiajs/vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import "../css/app.css";
-import Layout from "./Shared/Layout.vue";
+import Layout from "@/Shared/Layout.vue";
 
 createInertiaApp({
     progress: {
