@@ -27,6 +27,9 @@ services:
         - GID=${GID:-1000}
     volumes:
       - ./src:/var/www/html
+    depends_on:
+      mariadb:
+        condition: service_healthy
 
   composer:
     build:
@@ -61,7 +64,9 @@ services:
       - ./src/.env
     healthcheck:
       test: mysqladmin ping -h localhost
-      timeout: 30s
+      start_period: 10s
+      start_interval: 1s
+      timeout: 5s
       retries: 5
 
   npm:
