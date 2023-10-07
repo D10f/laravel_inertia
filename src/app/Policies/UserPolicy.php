@@ -28,7 +28,16 @@ class UserPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->email == 'test@example.com';
+    }
+
+    /**
+     * Determine whether the user can edit existing models.
+     */
+    public function edit(User $user, User $other): bool
+    {
+        // return (bool) mt_rand(0,1);
+        return str_starts_with($other->name, 'M');
     }
 
     /**

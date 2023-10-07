@@ -39,10 +39,13 @@ Route::middleware('auth')->group(function () {
             ->through(fn($user) => [
                 'id' => $user->id,
                 'name' => $user->name,
+                'can' => [
+                    'edit' => Auth::user()->can('edit', $user)
+                ]
             ]),
             'filters' => Request::only(['search']),
             'can' => [
-                'createUser' => Auth::user()->email === 'test@example.com'
+                'createUser' => Auth::user()->can('create', User::class),
             ]
         ]);
     });
@@ -62,7 +65,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/users/create', function () {
         return Inertia::render('Users/Create');
-    });
+    })->can('create', User::class);
 
     Route::get('/settings', function () {
         return Inertia::render('Settings');
