@@ -5,7 +5,10 @@
         <div>
             <h2 class="font-bold text-2xl inline">Users</h2>
 
-            <Link href="/users/create" class="mx-4 inline text-blue-500"
+            <Link
+                v-if="can.createUser"
+                href="/users/create"
+                class="mx-4 inline text-blue-500"
                 >New User</Link
             >
         </div>
@@ -50,6 +53,7 @@ import { debounce } from "lodash";
 const props = defineProps({
     users: Object,
     filters: Object,
+    can: Object,
 });
 
 let search = ref(props.filters.search);

@@ -12,9 +12,11 @@ services:
       - ./nginx/:/etc/nginx/conf.d
     ports:
       - 8080:80
+      - 8081:8081
       - 5173:5173
     depends_on:
       - laravel
+      - phpmyadmin
       - npm
 
   laravel:
@@ -28,8 +30,7 @@ services:
     volumes:
       - ./src:/var/www/html
     depends_on:
-      mariadb:
-        condition: service_healthy
+      - mariadb
 
   composer:
     build:
@@ -77,6 +78,14 @@ services:
     user: node
     entrypoint: ["npm"]
     command: ["run", "dev"]
+
+  phpmyadmin:
+    image: phpmyadmin:fpm
+    env_file:
+      - ./src/.env
+    depends_on:
+      mariadb:
+        condition: service_healthy
 
 volumes:
   db_data: {}

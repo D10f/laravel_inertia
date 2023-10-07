@@ -24,13 +24,13 @@ import NavLink from "./NavLink.vue";
                 </NavLink>
             </li>
             <li>
-                <Link
-                    as="button"
-                    method="post"
+                <NavLink
                     href="/logout"
+                    method="post"
                     class="text-blue-600 hover:underline"
-                    >Logout</Link
                 >
+                    Logout
+                </NavLink>
             </li>
         </ul>
     </nav>
