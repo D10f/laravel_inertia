@@ -10,6 +10,7 @@ services:
     volumes:
       - ./src:/var/www/html
       - ./nginx/:/etc/nginx/conf.d
+      - pma_data:/var/www/pma
     ports:
       - 8080:80
       - 8081:8081
@@ -81,11 +82,13 @@ services:
 
   phpmyadmin:
     image: phpmyadmin:fpm
+    volumes:
+      - pma_data:/var/www/html
     env_file:
       - ./src/.env
     depends_on:
-      mariadb:
-        condition: service_healthy
+      - mariadb
 
 volumes:
-  db_data: {}
+  db_data:
+  pma_data:
