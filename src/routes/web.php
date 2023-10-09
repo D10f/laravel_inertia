@@ -50,6 +50,24 @@ Route::middleware('auth')->group(function () {
         ]);
     });
 
+    Route::get('/users/{user}', function (User $user) {
+        return Inertia::render('Users/Edit', [
+            'user' => $user
+        ]);
+    })->can('edit', 'user');
+
+    Route::post('/users/{user}', function (User $user) {
+        $attributes = Request::validate([
+            'name' => 'required',
+            'email' => ['required', 'email'],
+            'password' => 'confirmed',
+        ]);
+
+        $user->update($attributes);
+
+        return redirect('/users');
+    });
+
     Route::post('/users', function () {
         sleep(2);
         $attributes = Request::validate([
@@ -70,6 +88,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/settings', function () {
         return Inertia::render('Settings');
     });
+
 
 });
 
