@@ -1,10 +1,9 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\UserController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 /*
@@ -28,62 +27,11 @@ Route::middleware('auth')->group(function () {
         return Inertia::render('Home');
     });
 
-    Route::get('/users', function () {
-        return Inertia::render('Users/Index', [
-            'users' => User::query()
-            ->when(Request::input('search'), function ($query, $search) {
-                $query->where('name', 'like', '%' . $search . '%');
-            })
-            ->paginate()
-            ->withQueryString()
-            ->through(fn($user) => [
-                'id' => $user->id,
-                'name' => $user->name,
-                'can' => [
-                    'edit' => Auth::user()->can('edit', $user)
-                ]
-            ]),
-            'filters' => Request::only(['search']),
-            'can' => [
-                'createUser' => Auth::user()->can('create', User::class),
-            ]
-        ]);
-    });
-
-    Route::get('/users/{user}', function (User $user) {
-        return Inertia::render('Users/Edit', [
-            'user' => $user
-        ]);
-    })->can('edit', 'user');
-
-    Route::post('/users/{user}', function (User $user) {
-        $attributes = Request::validate([
-            'name' => 'required',
-            'email' => ['required', 'email'],
-            'password' => 'confirmed',
-        ]);
-
-        $user->update($attributes);
-
-        return redirect('/users');
-    });
-
-    Route::post('/users', function () {
-        sleep(2);
-        $attributes = Request::validate([
-            'name' => 'required',
-            'email' => ['required', 'email'],
-            'password' => 'required'
-        ]);
-
-        User::create($attributes);
-
-        return redirect('/users');
-    });
-
-    Route::get('/users/create', function () {
-        return Inertia::render('Users/Create');
-    })->can('create', User::class);
+    Route::get('/users', [UserController::class, 'index']);
+    Route::get('/users/{user}/edit', [UserController::class, 'edit'])->can('edit', 'user');
+    Route::put('/users/{user}', [UserController::class, 'update']);
+    Route::post('/users', [UserController::class, 'store']);
+    Route::get('/users/create', [UserController::class, 'create'])->can('create', User::class);
 
     Route::get('/settings', function () {
         return Inertia::render('Settings');

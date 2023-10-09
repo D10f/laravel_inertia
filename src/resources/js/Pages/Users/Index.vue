@@ -5,20 +5,11 @@
         <div>
             <h2 class="font-bold text-2xl inline">Users</h2>
 
-            <Link
-                v-if="can.createUser"
-                href="/users/create"
-                class="mx-4 inline text-blue-500"
-                >New User</Link
-            >
+            <Link v-if="can.createUser" href="/users/create" class="mx-4 inline text-blue-500">New User</Link>
         </div>
 
         <label>
-            <input
-                v-model="search"
-                class="border-gray-400 border rounded px-2"
-                placeholder="Search"
-            />
+            <input v-model="search" class="border-gray-400 border rounded px-2" placeholder="Search" />
         </label>
     </header>
 
@@ -28,16 +19,10 @@
                 <td class="px-6 py-4 whitespace-nowrap">
                     <h3>{{ user.name }}</h3>
                 </td>
-                <td
-                    class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"
-                >
-                    <Link
-                        v-if="user.can.edit"
-                        :href="`/users/${user.id}`"
-                        class="text-indigo-600 hover:text-indigo-900"
-                    >
-                        Edit</Link
-                    >
+                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <Link v-if="user.can.edit" :href="`/users/${user.id}/edit`"
+                        class="text-indigo-600 hover:text-indigo-900">
+                    Edit</Link>
                 </td>
             </tr>
         </tbody>
